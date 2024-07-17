@@ -1,0 +1,54 @@
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'quickSort' function below.
+#
+# The function is expected to return an INTEGER_ARRAY.
+# The function accepts INTEGER_ARRAY arr as parameter.
+#
+
+def quickSort(a):
+    # Write your code here
+    def partition(a, low, high):
+        p = a[high]
+        i = low - 1
+        for j in range(low,high):
+            if a[j] <= p:
+                i += 1
+                a[i], a[j] = a[j], a[i]
+
+        a[i+1],a[high] = a[high],a[i+1]
+        return i+1
+
+    def quick_sort(a, low=0, high = None):
+        if high == None:
+            high = len(a) - 1
+
+        if low < high:
+            p_id = partition(a, low, high)
+            quick_sort(a, low, p_id-1)
+            quick_sort(a, p_id+1, high)
+
+    quick_sort(a)
+    return a
+
+
+if __name__ == '__main__':
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
+
+    n = int(input().strip())
+
+    arr = list(map(int, input().rstrip().split()))
+
+    result = quickSort(arr)
+
+    fptr.write(' '.join(map(str, result)))
+    fptr.write('\n')
+
+    fptr.close()
